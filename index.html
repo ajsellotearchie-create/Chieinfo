@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+    <meta name="google-site-verification" content="0GNgMOjdMer5eBoo5HvFop_3fojukRlTxSOMANUF0Bo" />
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="0GNgMOjdMer5eBoo5HvFop_3fojukRlTxSOMANUF0Bo" />
-
-    <title>Archie Sellote — Sample Student Portfolio</title>
+    <title>Archie Sellote sample web</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,14 +15,14 @@
                     colors: {
                         dark: '#000000',
                         card: '#121212',
-                        accent: '#a855f7'
+                        accent: '#eab308'
                     }
                 }
             }
         }
     </script>
     <style>
-      
+        /* Smooth Custom Scrolling & Selection */
         html {
             scroll-behavior: smooth;
         }
@@ -37,7 +37,7 @@
             content: '';
             position: absolute;
             inset: -4px;
-            background: linear-gradient(45deg, #a855f7, #ec4899, #3b82f6, #a855f7);
+            background: linear-gradient(45deg, #eab308, #3b82f6, #60a5fa, #facc15);
             border-radius: 1.5rem;
             z-index: -1;
             background-size: 400%;
@@ -77,7 +77,7 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        
+        /* Gallery Item Customizations */
         .gallery-item-wrapper {
             position: relative;
             border-radius: 1rem;
@@ -90,7 +90,7 @@
         }
         .gallery-item-wrapper:hover {
             transform: translateY(-6px);
-            box-shadow: 0 15px 30px -10px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.3);
         }
         .gallery-item-wrapper::after {
             content: '❤️ 💬';
@@ -114,7 +114,8 @@
             filter: grayscale(0%); 
         }
 
-           .fade-overlay {
+        /* Smooth Transition Classes for Modals and Overlays */
+        .fade-overlay {
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s ease;
@@ -145,7 +146,7 @@
     <!-- Navigation Bar (Glassmorphism) -->
     <header class="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-neutral-800 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-xl font-bold tracking-wider text-white">AS<span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">.</span></a>
+            <a href="#" class="text-xl font-bold tracking-wider text-white">AS<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-blue-500">.</span></a>
             
             <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-neutral-300">
@@ -177,21 +178,21 @@
             <!-- Left Column: Text UI -->
             <div class="space-y-6">
                 <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-700 text-xs font-medium text-white shadow-inner">
-                    <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+                    <span class="w-2 h-2 rounded-full bg-yellow-400 animate-ping"></span>
                     <span>Available for new school projects</span>
                 </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500">Archie Sellote</span>
+                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-blue-500">Archie Sellote</span>
                 </h1>
                 <p class="text-lg text-neutral-400 max-w-lg leading-relaxed">
                     Hi! I’m an IT student. Right now in class, we’re studying Python, java, and C language. Outside of that, I’m exploring HTML and CSS to understand how to design responsive websites. I’ve worked on projects such as a Grading System, Ordering System, and Payroll System using C language. I enjoy learning new things and applying what I study to small projects and exercises.
                 </p>
                 <div class="flex flex-wrap items-center space-x-4 pt-4 gap-y-3">
-                    <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-semibold shadow-lg shadow-purple-500/25 hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all duration-200">
+                    <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold shadow-lg shadow-yellow-500/25 hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all duration-200">
                         View Work
                     </a>
                     <!-- Button to open Hobbies Page Overlay -->
-                    <button onclick="toggleHobbiesPage(true)" class="px-6 py-3 rounded-xl bg-neutral-900 border border-purple-500/50 font-semibold text-purple-400 hover:bg-purple-500/10 hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-lg shadow-purple-500/10 cursor-pointer">
+                    <button onclick="toggleHobbiesPage(true)" class="px-6 py-3 rounded-xl bg-neutral-900 border border-yellow-500/50 font-semibold text-yellow-400 hover:bg-yellow-500/10 hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-lg shadow-yellow-500/10 cursor-pointer">
                         🎨 View My Hobbies
                     </button>
                     <button onclick="toggleModal(true)" class="px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-700 font-semibold hover:border-neutral-500 text-white hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer">
@@ -229,7 +230,7 @@
             </div>
             <!-- Filter Buttons -->
             <div class="flex flex-wrap gap-2">
-                <button onclick="filterProjects('all')" class="filter-btn px-4 py-2 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-semibold text-sm transition-all duration-200 hover:opacity-90 active:scale-95 cursor-pointer" data-filter="all">All</button>
+                <button onclick="filterProjects('all')" class="filter-btn px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold text-sm transition-all duration-200 hover:opacity-90 active:scale-95 cursor-pointer" data-filter="all">All</button>
                 <button onclick="filterProjects('c-system')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm hover:border-neutral-500 transition-all duration-200 active:scale-95 cursor-pointer" data-filter="c-system">C Systems</button>
                 <button onclick="filterProjects('web')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm hover:border-neutral-500 transition-all duration-200 active:scale-95 cursor-pointer" data-filter="web">HTML & CSS Web</button>
             </div>
@@ -238,48 +239,48 @@
         <!-- Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="project-grid">
             <!-- Project 1: C Grading System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-purple-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="3.jpg" alt="Student Grading System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-xs font-semibold text-purple-400 uppercase tracking-wider">C Program</span>
+                    <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">C Program</span>
                     <h3 class="text-xl font-bold text-white">Student Grading System</h3>
                     <p class="text-neutral-400 text-sm leading-relaxed">This is a prototype of a Student Grading System built in C. Currently, it supports basic console functions like print and enter to add and view grades, with full data management.</p>
                 </div>
             </div>
 
             <!-- Project 2: C Ordering System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-pink-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="4.jpg" alt="Product Ordering System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-xs font-semibold text-pink-400 uppercase tracking-wider">C Program</span>
+                    <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">C Program</span>
                     <h3 class="text-xl font-bold text-white">Canteen Ordering System</h3>
                     <p class="text-neutral-400 text-sm leading-relaxed">This is a C-based Product Ordering System that uses two CSV files for data management one for products and one for users. The system supports separate Admin and User login, basic console input using print and enter, order processing, and receipt generation with total amount. It also records login time for each user session.</p>
                 </div>
             </div>
 
             <!-- Project 3: C canteen ordering System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="5.jpg" alt="Canteen Ordering System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="p-6 space-y-3">
-                    <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">C Program</span>
+                    <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">C Program</span>
                     <h3 class="text-xl font-bold text-white">Canteen Ordering System</h3>
                     <p class="text-neutral-400 text-sm leading-relaxed">A prototype Canteen Ordering System built with C that runs in the console, where users can enter their orders.</p>
                 </div>
             </div>
 
             <!-- Project 4: Cake Shop Web App -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-purple-500 hover:-translate-y-1.5 transition-all duration-300 group md:col-span-3 shadow-xl" data-category="web">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 hover:-translate-y-1.5 transition-all duration-300 group md:col-span-3 shadow-xl" data-category="web">
                 <div class="h-56 overflow-hidden bg-neutral-900 relative">
                     <img src="2.jpg" alt="Cake Shop Web" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex items-end p-6">
                         <div>
-                            <span class="text-xs font-semibold text-pink-400 uppercase tracking-wider">HTML & CSS</span>
+                            <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">HTML & CSS</span>
                             <h3 class="text-2xl font-bold text-white">Sweet Fruit Cake Shop Prototype</h3>
                         </div>
                     </div>
@@ -296,17 +297,17 @@
         <div class="max-w-6xl mx-auto text-center space-y-12">
             <h2 class="text-3xl font-bold text-white">Core Technologies</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-purple-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
                     <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">💻</p>
                     <h3 class="font-semibold text-white">C Language</h3>
                     <p class="text-xs text-neutral-400 mt-1">Systems & File Handling</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-pink-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
                     <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">🌐</p>
                     <h3 class="font-semibold text-white">HTML</h3>
                     <p class="text-xs text-neutral-400 mt-1">Semantic Web Design</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
                     <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">🎨</p>
                     <h3 class="font-semibold text-white">CSS</h3>
                     <p class="text-xs text-neutral-400 mt-1">Layouts & Animations</p>
@@ -336,7 +337,7 @@
         <!-- Hobbies Content Container -->
         <div class="max-w-6xl mx-auto px-6 py-16 space-y-12">
             <div class="text-center space-y-3">
-                <span class="text-xs uppercase tracking-widest text-purple-400 font-semibold">Personal Life & Interests</span>
+                <span class="text-xs uppercase tracking-widest text-yellow-400 font-semibold">Personal Life & Interests</span>
                 <h1 class="text-4xl md:text-5xl font-extrabold text-white">Random Pictures of Nature</h1>
                 <p class="text-neutral-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
                     Here is a dedicated visual showcase of my personal interests, creative pursuits, and favorite moments outside of coding. Click any picture to explore details.
@@ -372,22 +373,22 @@
                     <p class="text-neutral-400 text-sm mt-1">My core personal activities and passions</p>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-purple-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
+                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
                         <p class="text-3xl mb-2">🍳</p>
                         <h4 class="font-semibold text-white">Cooking</h4>
                         <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-pink-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
+                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
                         <p class="text-3xl mb-2">✏️</p>
                         <h4 class="font-semibold text-white">Drawing</h4>
                         <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
+                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
                         <p class="text-3xl mb-2">✍️</p>
                         <h4 class="font-semibold text-white">Writing</h4>
                         <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
                     </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-green-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
+                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
                         <p class="text-3xl mb-2">🎮</p>
                         <h4 class="font-semibold text-white">Playing</h4>
                         <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
@@ -434,7 +435,7 @@
                 </div>
             </div>
 
-            <button onclick="toggleModal(false)" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 text-white font-semibold hover:opacity-95 active:scale-95 transition-all duration-200 shadow-lg shadow-purple-500/20 cursor-pointer">Close</button>
+            <button onclick="toggleModal(false)" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold hover:opacity-95 active:scale-95 transition-all duration-200 shadow-lg shadow-yellow-500/20 cursor-pointer">Close</button>
         </div>
     </div>
 
@@ -510,9 +511,9 @@
             buttons.forEach(btn => {
                 if (btn.getAttribute('data-filter') === category) {
                     btn.classList.remove('bg-neutral-900', 'border', 'border-neutral-700', 'text-neutral-300');
-                    btn.classList.add('bg-gradient-to-r', 'from-purple-500', 'via-pink-500', 'to-blue-500', 'text-white', 'font-semibold');
+                    btn.classList.add('bg-gradient-to-r', 'from-yellow-500', 'via-amber-500', 'to-blue-600', 'text-white', 'font-semibold');
                 } else {
-                    btn.classList.remove('bg-gradient-to-r', 'from-purple-500', 'via-pink-500', 'to-blue-500', 'text-white', 'font-semibold');
+                    btn.classList.remove('bg-gradient-to-r', 'from-yellow-500', 'via-amber-500', 'to-blue-600', 'text-white', 'font-semibold');
                     btn.classList.add('bg-neutral-900', 'border', 'border-neutral-700', 'text-neutral-300');
                 }
             });
