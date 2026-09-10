@@ -41,12 +41,42 @@
             filter: grayscale(0%); 
         }
         .hobby-card {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
         }
         .hobby-card:hover {
             transform: translateY(-6px) scale(1.04);
             box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.2);
             border-color: rgba(234, 179, 8, 0.5);
+        }
+        @keyframes igPop {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .ig-modal-animate {
+            animation: igPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Fixed Overlay for Modal */
+        #igModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 1rem;
         }
     </style>
 </head>
@@ -60,7 +90,7 @@
             <a href="my hobbies.html" class="text-yellow-400 font-semibold transition-colors">Hobbies</a>
             <a href="my future business.html" class="hover:text-yellow-400 transition-colors">Business</a>
         </nav>
-        <a href="index.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+        <a href="home.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
     </header>
 
     <!-- Content -->
@@ -74,22 +104,22 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('a.jpg', 'Nature photo 1')">
                 <img src="a.jpg" alt="Nature photo 1" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('b.jpg', 'Nature photo 2')">
                 <img src="b.jpg" alt="Nature photo 2" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('c.jpg', 'Nature photo 3')">
                 <img src="c.jpg" alt="Nature photo 3" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('d.jpg', 'Nature photo 4')">
                 <img src="d.jpg" alt="Nature photo 4" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('e.jpg', 'Nature photo 5')">
                 <img src="e.jpg" alt="Nature photo 5" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72">
+            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('f.jpg', 'Nature photo 6')">
                 <img src="f.jpg" alt="Nature photo 6" class="w-full h-full object-cover filter grayscale-[15%]">
             </div>
         </div>
@@ -124,10 +154,67 @@
         </div>
     </main>
 
+    <!-- Popup Modal with Image and Action Menu Below -->
+    <div id="igModal" onclick="closeIgModal()">
+        <div class="relative w-full max-w-md flex flex-col items-center justify-center gap-4 my-auto ig-modal-animate" onclick="event.stopPropagation()">
+            
+            <!-- Expanded Image -->
+            <div class="relative w-full flex items-center justify-center">
+                <img id="igModalImg" src="" alt="" class="max-w-full max-h-[50vh] object-contain rounded-2xl shadow-2xl border border-neutral-800">
+            </div>
+
+            <!-- Instagram Action Menu Below Image -->
+            <div class="w-full bg-[#121212] border border-neutral-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-sm divide-y divide-neutral-800/60">
+                <button onclick="handleAction('Like')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
+                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <span class="font-medium text-white">Like</span>
+                </button>
+                <button onclick="handleAction('Comment')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
+                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    <span class="font-medium text-white">Comment</span>
+                </button>
+                <button onclick="handleAction('Repost')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
+                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-green-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span class="font-medium text-white">Repost</span>
+                </button>
+                <button onclick="handleAction('Share')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
+                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                    <span class="font-medium text-white">Share</span>
+                </button>
+                <button onclick="handleAction('Report')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <span class="font-medium text-red-500">Report</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-12 px-6 text-center text-sm text-neutral-400 border-t border-neutral-800 bg-black mt-12">
         <p>© Archie Sellote. Built with C, HTML, CSS.</p>
     </footer>
+
+    <script>
+        function openIgModal(src, alt) {
+            const modal = document.getElementById('igModal');
+            const modalImg = document.getElementById('igModalImg');
+            modalImg.src = src;
+            modalImg.alt = alt;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeIgModal() {
+            const modal = document.getElementById('igModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleAction(action) {
+            alert(action + ' clicked!');
+        }
+    </script>
 
 </body>
 </html>
