@@ -40,6 +40,14 @@
             transform: scale(1.08); 
             filter: grayscale(0%); 
         }
+        .hobby-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hobby-card:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.2);
+            border-color: rgba(234, 179, 8, 0.5);
+        }
     </style>
 </head>
 <body class="bg-black text-white font-sans selection:bg-yellow-500 selection:text-white min-h-screen flex flex-col justify-between page-transition">
@@ -52,7 +60,7 @@
             <a href="my hobbies.html" class="text-yellow-400 font-semibold transition-colors">Hobbies</a>
             <a href="my future business.html" class="hover:text-yellow-400 transition-colors">Business</a>
         </nav>
-        <a href="home.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+        <a href="index.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
     </header>
 
     <!-- Content -->
@@ -92,22 +100,22 @@
                 <p class="text-neutral-400 text-sm mt-1">My core personal activities and passions</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md">
+                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
                     <p class="text-3xl mb-2">🍳</p>
                     <h4 class="font-semibold text-white">Cooking</h4>
                     <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md">
+                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
                     <p class="text-3xl mb-2">✏️</p>
                     <h4 class="font-semibold text-white">Drawing</h4>
                     <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md">
+                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
                     <p class="text-3xl mb-2">✍️</p>
                     <h4 class="font-semibold text-white">Writing</h4>
                     <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md">
+                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
                     <p class="text-3xl mb-2">🎮</p>
                     <h4 class="font-semibold text-white">Playing</h4>
                     <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
@@ -123,4 +131,3 @@
 
 </body>
 </html>
-
