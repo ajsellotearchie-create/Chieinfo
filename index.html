@@ -2,7 +2,6 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta name="google-site-verification" content="0GNgMOjdMer5eBoo5HvFop_3fojukRlTxSOMANUF0Bo" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archie Sellote sample web</title>
@@ -22,17 +21,26 @@
         }
     </script>
     <style>
-        /* Smooth Custom Scrolling & Selection */
         html {
             scroll-behavior: smooth;
         }
-
-        /* Custom Hover & Animation Effects for the Picture */
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .page-transition {
+            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
         .profile-container {
             position: relative;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .profile-container::before {
             content: '';
             position: absolute;
@@ -45,137 +53,67 @@
             opacity: 0;
             transition: opacity 0.5s ease;
         }
-
         .profile-container:hover::before {
             opacity: 1;
         }
-
         .profile-container:hover {
             transform: translateY(-8px) scale(1.02);
         }
-
         .profile-img {
             transition: transform 0.5s ease;
         }
-
         .profile-container:hover .profile-img {
             transform: scale(1.05);
         }
-
         @keyframes glowing {
             0% { background-position: 0 0; }
             50% { background-position: 400% 0; }
             100% { background-position: 0 0; }
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
-
         .animate-float {
             animation: float 4s ease-in-out infinite;
         }
-
-        /* Gallery Item Customizations */
-        .gallery-item-wrapper {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(132, 132, 132, 0.3);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
-        }
-        .gallery-item-wrapper:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.3);
-        }
-        .gallery-item-wrapper::after {
-            content: '❤️ 💬';
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .gallery-item-wrapper:hover::after { opacity: 1; }
-        .gallery-item-wrapper img {
-            transition: transform 0.5s ease, filter 0.5s ease;
-        }
-        .gallery-item-wrapper:hover img { 
-            transform: scale(1.08); 
-            filter: grayscale(0%); 
-        }
-
-        /* Smooth Transition Classes for Modals and Overlays */
-        .fade-overlay {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s ease;
-        }
-        .fade-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scale-modal {
-            transform: scale(0.95) translateY(10px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .fade-overlay.active .scale-modal {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-
-        /* Project Card Smooth Transition Handling */
         .project-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
-<body class="bg-dark text-white font-sans selection:bg-accent selection:text-white overflow-x-hidden">
+<body class="bg-dark text-white font-sans selection:bg-accent selection:text-white overflow-x-hidden page-transition">
 
-    <!-- Navigation Bar (Glassmorphism) -->
+    <!-- Navigation Bar -->
     <header class="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-md border-b border-neutral-800 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-xl font-bold tracking-wider text-white">AS<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-blue-500">.</span></a>
+            <a href="home.html" class="text-xl font-bold tracking-wider text-white">AS<span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-blue-500">.</span></a>
             
-            <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-neutral-300">
-                <a href="#about" class="hover:text-white transition-colors duration-200">About</a>
-                <a href="#projects" class="hover:text-white transition-colors duration-200">Projects</a>
-                <button onclick="toggleHobbiesPage(true)" class="hover:text-white transition-colors duration-200 cursor-pointer">Hobbies</button>
+                <a href="index.html" class="text-white transition-colors duration-200">Home</a>
+                <a href="about me.html" class="hover:text-white transition-colors duration-200">About Me</a>
+                <a href="my hobbies.html" class="hover:text-white transition-colors duration-200">View My Hobbies</a>
+                <a href="my future business.html" class="hover:text-yellow-400 transition-colors duration-200 text-yellow-500 font-semibold">Future Business</a>
             </nav>
 
-            <!-- Mobile Hamburger Button -->
-            <button id="menu-btn" class="md:hidden text-neutral-300 focus:outline-none transition-transform active:scale-95">
+            <button id="menu-btn" class="md:hidden text-neutral-300 focus:outline-none transition-transform active:scale-95 cursor-pointer">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </div>
 
-        <!-- Mobile Menu with Smooth Collapse -->
-        <div id="mobile-menu" class="hidden md:hidden bg-card border-b border-neutral-800 px-6 py-4 space-y-3 transition-all duration-300">
-            <a href="#about" class="block text-neutral-300 hover:text-white transition-colors">About</a>
-            <a href="#projects" class="block text-neutral-300 hover:text-white transition-colors">Projects</a>
-            <button onclick="toggleHobbiesPage(true)" class="block text-neutral-300 hover:text-white w-full text-left transition-colors">Hobbies</button>
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-b border-neutral-800 px-6 py-4 space-y-3">
+            <a href="home.html" class="block text-white transition-colors">Home</a>
+            <a href="about me.html" class="block text-neutral-300 hover:text-white transition-colors">About Me</a>
+            <a href="my hobbies.html" class="block text-neutral-300 hover:text-white transition-colors">View My Hobbies</a>
+            <a href="my future business.html" class="block text-yellow-400 hover:text-yellow-300 transition-colors font-semibold">Future Business</a>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section id="about" class="pt-32 pb-20 md:pt-44 md:pb-32 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            
-            <!-- Left Column: Text UI -->
             <div class="space-y-6">
                 <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-700 text-xs font-medium text-white shadow-inner">
                     <span class="w-2 h-2 rounded-full bg-yellow-400 animate-ping"></span>
@@ -185,29 +123,23 @@
                     Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-blue-500">Archie Sellote</span>
                 </h1>
                 <p class="text-lg text-neutral-400 max-w-lg leading-relaxed">
-                    Hi! I’m an IT student. Right now in class, we’re studying Python, java, and C language. Outside of that, I’m exploring HTML and CSS to understand how to design responsive websites. I’ve worked on projects such as a Grading System, Ordering System, and Payroll System using C language. I enjoy learning new things and applying what I study to small projects and exercises.
+                    Welcome to my personal web! Explore about me and feel free to know me.
+                    
                 </p>
                 <div class="flex flex-wrap items-center space-x-4 pt-4 gap-y-3">
-                    <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold shadow-lg shadow-yellow-500/25 hover:opacity-95 hover:scale-[1.02] active:scale-95 transition-all duration-200">
-                        View Work
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-neutral-900 border border-neutral-700 font-semibold hover:border-blue-500 text-white hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center space-x-2">
+                        <svg class="w-5 h-5 fill-blue-500" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <span>Facebook</span>
                     </a>
-                    <!-- Button to open Hobbies Page Overlay -->
-                    <button onclick="toggleHobbiesPage(true)" class="px-6 py-3 rounded-xl bg-neutral-900 border border-yellow-500/50 font-semibold text-yellow-400 hover:bg-yellow-500/10 hover:scale-[1.02] active:scale-95 transition-all duration-200 shadow-lg shadow-yellow-500/10 cursor-pointer">
-                        🎨 View My Hobbies
-                    </button>
-                    <button onclick="toggleModal(true)" class="px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-700 font-semibold hover:border-neutral-500 text-white hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer">
-                        my contact
-                    </button>
+                    <a href="https://instagram.com/archie__pou" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-neutral-900 border border-neutral-700 font-semibold hover:border-pink-500 text-white hover:scale-[1.02] active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center space-x-2">
+                        <svg class="w-5 h-5 fill-pink-500" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        <span>Instagram</span>
+                    </a>
                 </div>
             </div>
-
-            <!-- Right Column: Profile Picture with Advanced Hover Effect -->
             <div class="flex justify-center">
                 <div class="profile-container p-2 rounded-3xl bg-neutral-900 border border-neutral-700 shadow-2xl cursor-pointer">
-                    <img src="1.jpg" 
-                         alt="Profile Picture" 
-                         class="profile-img w-72 h-72 md:w-80 md:h-80 object-cover rounded-2xl">
-                    
+                    <img src="1.jpg" alt="Profile Picture" class="profile-img w-72 h-72 md:w-80 md:h-80 object-cover rounded-2xl">
                     <div class="absolute -bottom-4 -right-4 bg-neutral-900/90 backdrop-blur-md border border-neutral-700 px-4 py-3 rounded-2xl shadow-xl animate-float flex items-center space-x-3 pointer-events-none">
                         <span class="text-2xl">🚀</span>
                         <div>
@@ -217,53 +149,47 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- Projects Section with Smooth Filter Function -->
+    <!-- Projects Section -->
     <section id="projects" class="py-20 px-6 max-w-6xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div>
                 <h2 class="text-3xl font-bold text-white">School Projects</h2>
                 <p class="text-neutral-400 mt-2">Explore my C system applications and HTML/CSS web prototype.</p>
             </div>
-            <!-- Filter Buttons -->
             <div class="flex flex-wrap gap-2">
-                <button onclick="filterProjects('all')" class="filter-btn px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold text-sm transition-all duration-200 hover:opacity-90 active:scale-95 cursor-pointer" data-filter="all">All</button>
-                <button onclick="filterProjects('c-system')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm hover:border-neutral-500 transition-all duration-200 active:scale-95 cursor-pointer" data-filter="c-system">C Systems</button>
-                <button onclick="filterProjects('web')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm hover:border-neutral-500 transition-all duration-200 active:scale-95 cursor-pointer" data-filter="web">HTML & CSS Web</button>
+                <button onclick="filterProjects('all')" class="filter-btn px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold text-sm cursor-pointer" data-filter="all">All</button>
+                <button onclick="filterProjects('c-system')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm cursor-pointer" data-filter="c-system">C Systems</button>
+                <button onclick="filterProjects('web')" class="filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm cursor-pointer" data-filter="web">HTML & CSS Web</button>
             </div>
         </div>
 
-        <!-- Projects Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="project-grid">
-            <!-- Project 1: C Grading System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="3.jpg" alt="Student Grading System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="p-6 space-y-3">
                     <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">C Program</span>
                     <h3 class="text-xl font-bold text-white">Student Grading System</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">This is a prototype of a Student Grading System built in C. Currently, it supports basic console functions like print and enter to add and view grades, with full data management.</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed">This is a prototype of a Student Grading System built in C. Currently, it supports basic console functions like print and enter to add and view grades.</p>
                 </div>
             </div>
 
-            <!-- Project 2: C Ordering System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="4.jpg" alt="Product Ordering System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
                 <div class="p-6 space-y-3">
                     <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">C Program</span>
                     <h3 class="text-xl font-bold text-white">Canteen Ordering System</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">This is a C-based Product Ordering System that uses two CSV files for data management one for products and one for users. The system supports separate Admin and User login, basic console input using print and enter, order processing, and receipt generation with total amount. It also records login time for each user session.</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed">A C-based Product Ordering System that uses two CSV files for data management—one for products and one for users.</p>
                 </div>
             </div>
 
-            <!-- Project 3: C canteen ordering System -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 hover:-translate-y-1.5 transition-all duration-300 group shadow-xl" data-category="c-system">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-yellow-500 group shadow-xl" data-category="c-system">
                 <div class="h-48 overflow-hidden bg-neutral-900">
                     <img src="5.jpg" alt="Canteen Ordering System" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 </div>
@@ -274,8 +200,7 @@
                 </div>
             </div>
 
-            <!-- Project 4: Cake Shop Web App -->
-            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 hover:-translate-y-1.5 transition-all duration-300 group md:col-span-3 shadow-xl" data-category="web">
+            <div class="project-card rounded-2xl bg-card border border-neutral-800 overflow-hidden hover:border-blue-500 group md:col-span-3 shadow-xl" data-category="web">
                 <div class="h-56 overflow-hidden bg-neutral-900 relative">
                     <img src="2.jpg" alt="Cake Shop Web" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex items-end p-6">
@@ -286,29 +211,29 @@
                     </div>
                 </div>
                 <div class="p-6 space-y-3">
-                    <p class="text-neutral-400 text-sm leading-relaxed">A finished prototype of a cake shop website built with HTML and CSS. This project focuses on responsive web design, featuring a menu showcase, gallery grid, and ordering inquiry interface.</p>
+                    <p class="text-neutral-400 text-sm leading-relaxed">A finished prototype of a cake shop website built with HTML and CSS focusing on responsive web design.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section UI -->
-    <section id="skills" class="py-20 bg-neutral-950 border-y border-neutral-800 px-6">
+    <!-- Skills Section -->
+    <section class="py-20 bg-neutral-950 border-y border-neutral-800 px-6">
         <div class="max-w-6xl mx-auto text-center space-y-12">
             <h2 class="text-3xl font-bold text-white">Core Technologies</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
-                    <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">💻</p>
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 group shadow-md">
+                    <p class="text-3xl mb-2">💻</p>
                     <h3 class="font-semibold text-white">C Language</h3>
                     <p class="text-xs text-neutral-400 mt-1">Systems & File Handling</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
-                    <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">🌐</p>
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 group shadow-md">
+                    <p class="text-3xl mb-2">🌐</p>
                     <h3 class="font-semibold text-white">HTML</h3>
                     <p class="text-xs text-neutral-400 mt-1">Semantic Web Design</p>
                 </div>
-                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 group shadow-md">
-                    <p class="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">🎨</p>
+                <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 group shadow-md">
+                    <p class="text-3xl mb-2">🎨</p>
                     <h3 class="font-semibold text-white">CSS</h3>
                     <p class="text-xs text-neutral-400 mt-1">Layouts & Animations</p>
                 </div>
@@ -321,221 +246,34 @@
         <p>© Archie Sellote. Built with C, HTML, CSS.</p>
     </footer>
 
-    <!-- Dedicated Smooth Hobbies Overlay Page -->
-    <div id="hobbies-page" class="fade-overlay fixed inset-0 z-50 bg-black overflow-y-auto">
-        <!-- Hobbies Header Bar -->
-        <div class="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-6 h-20 flex items-center justify-between max-w-6xl mx-auto w-full">
-            <div class="flex items-center space-x-3">
-                <button onclick="toggleHobbiesPage(false)" class="p-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 hover:text-white hover:border-neutral-500 transition-all duration-200 flex items-center space-x-2 text-sm font-medium active:scale-95 cursor-pointer">
-                    <span>← Back to Home</span>
-                </button>
-            </div>
-            <h2 class="text-lg font-bold text-white tracking-wider">Archie's Hobbies Gallery</h2>
-            <button onclick="toggleHobbiesPage(false)" class="text-neutral-400 hover:text-white text-2xl font-bold p-2 transition-colors cursor-pointer">✕</button>
-        </div>
-
-        <!-- Hobbies Content Container -->
-        <div class="max-w-6xl mx-auto px-6 py-16 space-y-12">
-            <div class="text-center space-y-3">
-                <span class="text-xs uppercase tracking-widest text-yellow-400 font-semibold">Personal Life & Interests</span>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white">Random Pictures of Nature</h1>
-                <p class="text-neutral-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-                    Here is a dedicated visual showcase of my personal interests, creative pursuits, and favorite moments outside of coding. Click any picture to explore details.
-                </p>
-            </div>
-
-            <!-- Picture Grid Only for Hobbies -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="gallery-item-wrapper h-64 md:h-72" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="a.jpg" alt="Profile" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-                <div class="gallery-item-wrapper h-64 md:h-72" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="b.jpg" alt="Cake Shop Web" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-                <div class="gallery-item-wrapper h-64 md:h-72" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="c.jpg" alt="Grading System" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-                <div class="gallery-item-wrapper h-64 md:h-72" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="d.jpg" alt="Ordering System" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-                <div class="gallery-item-wrapper h-64 md:h-72 flex items-center justify-center bg-card border border-neutral-800" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="e.jpg" alt="Discovering Things" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-                <div class="gallery-item-wrapper h-64 md:h-72 flex items-center justify-center bg-card border border-neutral-800" onclick="openImgModal(this.querySelector('img'))">
-                    <img src="f.jpg" alt="Hobbies Moment" class="w-full h-full object-cover filter grayscale-[15%]">
-                </div>
-            </div>
-
-            <!-- Added Bottom Hobbies Cards (Cooking, Drawing, Writing, Playing) -->
-            <div class="pt-8 space-y-6">
-                <div class="text-center">
-                    <h3 class="text-2xl font-bold text-white">What I Love Doing</h3>
-                    <p class="text-neutral-400 text-sm mt-1">My core personal activities and passions</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
-                        <p class="text-3xl mb-2">🍳</p>
-                        <h4 class="font-semibold text-white">Cooking</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
-                        <p class="text-3xl mb-2">✏️</p>
-                        <h4 class="font-semibold text-white">Drawing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-yellow-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
-                        <p class="text-3xl mb-2">✍️</p>
-                        <h4 class="font-semibold text-white">Writing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
-                    </div>
-                    <div class="p-6 rounded-2xl bg-card border border-neutral-800 hover:border-blue-500 hover:-translate-y-1 transition-all duration-300 text-center shadow-md">
-                        <p class="text-3xl mb-2">🎮</p>
-                        <h4 class="font-semibold text-white">Playing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- My Contact Direct Info Modal with Smooth Transitions -->
-    <div id="contact-modal" class="fade-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-        <div class="scale-modal bg-card border border-neutral-700 w-full max-w-md p-8 rounded-3xl relative shadow-2xl space-y-6">
-            <button onclick="toggleModal(false)" class="absolute top-5 right-5 text-neutral-400 hover:text-white text-xl transition-colors cursor-pointer">✕</button>
-            <div class="space-y-2">
-                <h3 class="text-2xl font-bold text-white">My Contact</h3>
-                <p class="text-neutral-400 text-sm">Here are my direct contact details. Feel free to reach out!</p>
-            </div>
-            
-            <!-- Direct Contact Info List -->
-            <div class="space-y-4">
-                <div class="flex items-center space-x-4 p-4 rounded-2xl bg-black border border-neutral-800">
-                    <span class="text-xl">📧</span>
-                    <div>
-                        <p class="text-xs text-neutral-400 uppercase tracking-wider font-semibold">Email</p>
-                        <p class="text-sm font-medium text-white">ajsellotearchie@gmail.com</p>
-                    </div>
-                </div>
-                
-
-                <div class="flex items-center space-x-4 p-4 rounded-2xl bg-black border border-neutral-800">
-                    <span class="text-xl">📞</span>
-                    <div>
-                        <p class="text-xs text-neutral-400 uppercase tracking-wider font-semibold">Phone Number</p>
-                        <p class="text-sm font-medium text-white">+63 931 218 5167</p>
-                    </div>
-                </div>
-
-                <div class="flex items-center space-x-4 p-4 rounded-2xl bg-black border border-neutral-800">
-                    <span class="text-xl">📸</span>
-                    <div>
-                        <p class="text-xs text-neutral-400 uppercase tracking-wider font-semibold">Instagram</p>
-                        <p class="text-sm font-medium text-white">archie__pou</p>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="toggleModal(false)" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold hover:opacity-95 active:scale-95 transition-all duration-200 shadow-lg shadow-yellow-500/20 cursor-pointer">Close</button>
-        </div>
-    </div>
-
-    <!-- Image Viewer Modal (Gallery zoom) with Smooth Transitions -->
-    <div id="imgModal" class="fade-overlay fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex justify-center items-center flex-col p-4" onclick="closeImgModal()">
-        <img id="modalImg" class="scale-modal max-w-[85%] max-h-[55vh] rounded-xl mb-5 border border-neutral-700 object-contain shadow-2xl" onclick="event.stopPropagation()">
-        <div class="scale-modal bg-white/[0.04] backdrop-blur-2xl p-2 rounded-2xl w-56 text-left border border-neutral-700 shadow-2xl" onclick="event.stopPropagation()">
-            <div class="p-3 text-sm text-neutral-300 hover:bg-white/10 hover:text-white rounded-lg cursor-pointer transition-colors border-b border-white/5">❤️ Like Photo</div>
-            <div class="p-3 text-sm text-neutral-300 hover:bg-white/10 hover:text-white rounded-lg cursor-pointer transition-colors border-b border-white/5">💬 Leave Comment</div>
-            <div class="p-3 text-sm text-neutral-300 hover:bg-white/10 hover:text-white rounded-lg cursor-pointer transition-colors border-b border-white/5">🔗 Copy Link</div>
-            <div class="p-3 text-sm text-red-400 hover:bg-white/10 hover:text-red-300 rounded-lg cursor-pointer transition-colors">⚠️ Report</div>
-        </div>
-    </div>
-
-    <!-- JavaScript for Smooth Interactivity -->
     <script>
-        // Mobile menu smooth collapse toggle
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
-            } else {
-                mobileMenu.classList.add('hidden');
-            }
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // Contact Modal Smooth Toggle
-        function toggleModal(show) {
-            const modal = document.getElementById('contact-modal');
-            if (show) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Dedicated Hobbies Page Smooth Toggle
-        function toggleHobbiesPage(show) {
-            const hobbiesPage = document.getElementById('hobbies-page');
-            if (show) {
-                hobbiesPage.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                hobbiesPage.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Image Viewer Modal Smooth Toggle
-        function openImgModal(imgElement) {
-            const modal = document.getElementById('imgModal');
-            document.getElementById('modalImg').src = imgElement.src;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeImgModal() {
-            const modal = document.getElementById('imgModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Project filtering logic with smooth fade transitions
         function filterProjects(category) {
             const cards = document.querySelectorAll('.project-card');
             const buttons = document.querySelectorAll('.filter-btn');
 
             buttons.forEach(btn => {
                 if (btn.getAttribute('data-filter') === category) {
-                    btn.classList.remove('bg-neutral-900', 'border', 'border-neutral-700', 'text-neutral-300');
-                    btn.classList.add('bg-gradient-to-r', 'from-yellow-500', 'via-amber-500', 'to-blue-600', 'text-white', 'font-semibold');
+                    btn.className = 'filter-btn px-4 py-2 rounded-xl bg-gradient-to-r from-yellow-500 via-amber-500 to-blue-600 text-white font-semibold text-sm cursor-pointer';
                 } else {
-                    btn.classList.remove('bg-gradient-to-r', 'from-yellow-500', 'via-amber-500', 'to-blue-600', 'text-white', 'font-semibold');
-                    btn.classList.add('bg-neutral-900', 'border', 'border-neutral-700', 'text-neutral-300');
+                    btn.className = 'filter-btn px-4 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-neutral-300 font-medium text-sm cursor-pointer';
                 }
             });
 
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
                     card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    }, 50);
                 } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 300);
+                    card.style.display = 'none';
                 }
             });
         }
     </script>
 </body>
 </html>
+
