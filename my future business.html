@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Business: Dream Cake Shop - Archie Sellote</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .page-transition {
+            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .wood-bg {
+            background-color: #1a0f0a;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.03) 10%, transparent 10%),
+                              linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+            background-size: 20px 20px, 100% 100%;
+        }
+        .polaroid-frame {
+            background: #fdfbf7;
+            padding: 12px 12px 36px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .polaroid-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle at 35% 35%, #fef08a 0%, #ca8a04 60%, #713f12 100%);
+            border-radius: 50%;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+        .polaroid-frame:hover {
+            transform: scale(1.08) rotate(0deg) translateY(-8px) !important;
+            z-index: 30;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(234, 179, 8, 0.4);
+        }
+    </style>
+</head>
+<body class="wood-bg text-white font-sans min-h-screen flex flex-col justify-between page-transition">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-6 h-20 flex items-center justify-between max-w-6xl mx-auto w-full">
+        <nav class="flex items-center space-x-6 text-sm font-medium">
+            <a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a>
+            <a href="about me.html" class="hover:text-yellow-400 transition-colors">About Me</a>
+            <a href="my hobbies.html" class="hover:text-yellow-400 transition-colors">Hobbies</a>
+            <a href="my future business.html" class="text-yellow-400 font-semibold transition-colors">Business</a>
+        </nav>
+        <a href="home.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-5xl mx-auto px-6 py-16 space-y-12 w-full">
+        <div class="text-center space-y-3">
+            <span class="text-xs uppercase tracking-widest text-yellow-400 font-semibold">Future Venture Pinboard</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white">My Dream Cake Shop</h1>
+            <p class="text-neutral-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                Visualizing my future artisanal bakery and custom cake studio. Hover over the polaroids to check out the details!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 pt-6 pb-12 max-w-4xl mx-auto items-center justify-items-center">
+            <div class="polaroid-frame w-64 transform -rotate-3 text-neutral-800 font-handwriting">
+                <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
+                    <img src="6.jpg" alt="Artisanal Cakes" class="w-full h-full object-cover">
+                </div>
+                <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Custom Wedding Cakes</p>
+            </div>
+            <div class="polaroid-frame w-64 transform rotate-2 text-neutral-800 font-handwriting">
+                <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
+                    <img src="7.jpg" alt="Pastry Display" class="w-full h-full object-cover">
+                </div>
+                <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Cozy Bakery Interior</p>
+            </div>
+            <div class="polaroid-frame w-64 transform -rotate-2 text-neutral-800 font-handwriting">
+                <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
+                    <img src="8.jpg" alt="Fresh Pastries" class="w-full h-full object-cover">
+                </div>
+                <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Freshly Baked Pastries</p>
+            </div>
+            <div class="polaroid-frame w-64 transform rotate-3 text-neutral-800 font-handwriting">
+                <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
+                    <img src="9.jpg" alt="Coffee and Desserts" class="w-full h-full object-cover">
+                </div>
+                <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Coffee & Dessert Bar</p>
+            </div>
+            <div class="polaroid-frame w-64 transform -rotate-1 text-neutral-800 font-handwriting">
+                <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
+                    <img src="10.jpg" alt="Baking Studio" class="w-full h-full object-cover">
+                </div>
+                <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Artisan Baking Studio</p>
+            </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-black/60 backdrop-blur-md border border-neutral-800 text-center max-w-xl mx-auto shadow-xl space-y-2">
+            <h3 class="text-yellow-400 font-semibold text-sm">Sweet Beginnings</h3>
+            <p class="text-neutral-300 text-xs md:text-sm">
+                A warm, inviting space dedicated to creating delicious memories, fresh pastries, and custom celebration cakes for every special occasion.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center text-sm text-neutral-400 border-t border-neutral-800 bg-black mt-12">
+        <p>© Archie Sellote. Built with C, HTML, CSS.</p>
+    </footer>
+
+</body>
+</html>
