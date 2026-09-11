@@ -6,18 +6,94 @@
     <title>About Me - Archie Sellote</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @keyframes pageIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        body {
+            background: #000;
+            background-image:
+                radial-gradient(circle at 20% 10%, rgba(59, 130, 246, 0.07), transparent 35%),
+                radial-gradient(circle at 80% 70%, rgba(234, 179, 8, 0.05), transparent 40%);
         }
-        .page-transition {
-            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+        @keyframes pageIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-transition { animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #fff8dc 25%, #60a5fa 50%, #fff8dc 75%, #60a5fa 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .section-badge {
+            animation: floatSlow 4s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #eab308);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after { width: 100%; }
+
+        .story-card {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.35);
+            box-shadow: 0 20px 45px -20px rgba(96, 165, 250, 0.25);
+        }
+        .story-card .glow-orb {
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+        .story-card:hover .glow-orb {
+            transform: scale(1.4);
+            opacity: 0.8;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: #60a5fa;
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-start infinite;
         }
     </style>
 </head>
@@ -26,29 +102,51 @@
     <!-- Header -->
     <header class="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-6 h-20 flex items-center justify-between max-w-6xl mx-auto w-full">
         <nav class="flex items-center space-x-6 text-sm font-medium">
-            <a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a>
-            <a href="about me.html" class="text-yellow-400 font-semibold transition-colors">About Me</a>
-            <a href="my hobbies.html" class="hover:text-yellow-400 transition-colors">Hobbies</a>
-            <a href="my future business.html" class="hover:text-yellow-400 transition-colors">Business</a>
+            <a href="index.html" class="nav-link hover:text-yellow-400 transition-colors">Home</a>
+            <a href="about me.html" class="nav-link active text-yellow-400 font-semibold transition-colors">About Me</a>
+            <a href="my hobbies.html" class="nav-link hover:text-yellow-400 transition-colors">Hobbies</a>
+            <a href="my future business.html" class="nav-link hover:text-yellow-400 transition-colors">Business</a>
         </nav>
-        <a href="index.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+        <a href="index.html" class="text-neutral-400 hover:text-white hover:rotate-90 text-xl font-bold p-2 transition-all duration-300 inline-block">✕</a>
     </header>
 
     <!-- Content -->
     <main class="max-w-4xl mx-auto px-6 py-16 space-y-12 my-auto">
-        <div class="text-center space-y-3">
-            <span class="text-xs uppercase tracking-widest text-blue-400 font-semibold">Get to Know Me</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-white">About Me</h1>
+        <div class="text-center space-y-3 fade-up" style="animation-delay: 0.05s;">
+            <span class="section-badge text-xs uppercase tracking-widest text-blue-400 font-semibold">✦ Get to Know Me ✦</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold shimmer-text">About Me</h1>
             <p class="text-neutral-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
                 Here is my background story and academic journey.
             </p>
         </div>
 
-        <div class="p-8 md:p-10 rounded-3xl bg-[#121212] border border-neutral-800 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none"></div>
-            <p class="text-lg md:text-xl text-neutral-200 leading-relaxed font-light">
-                Hi! I’m an IT student. Right now in class, we’re studying Python, Java, and C language. Outside of that, I’m exploring HTML and CSS to understand how to design responsive websites. I’ve worked on projects such as a Grading System, Ordering System, and Payroll System using C language. I enjoy learning new things and applying what I study to small projects and exercises. Outside of that, I’m interested in nature, and I like to take a break from the screen every now and then to explore the outdoors, go for walks, and enjoy a bit of fresh air to clear my mind sometimes hiking.
+        <div class="story-card fade-up p-8 md:p-10 rounded-3xl bg-[#121212] border border-neutral-800 shadow-2xl relative overflow-hidden" style="animation-delay: 0.18s;">
+            <div class="glow-orb absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="glow-orb absolute bottom-0 left-0 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            <p class="text-lg md:text-xl text-neutral-200 leading-relaxed font-light relative z-10">
+                Hi! I'm an IT student. Right now in class, we're studying Python, Java, and C language. Outside of that, I'm exploring HTML and CSS to understand how to design responsive websites. I've worked on projects such as a Grading System, Ordering System, and Payroll System using C language. I enjoy learning new things and applying what I study to small projects and exercises. Outside of that, I'm interested in nature, and I like to take a break from the screen every now and then to explore the outdoors, go for walks, and enjoy a bit of fresh air to clear my mind sometimes hiking.<span class="cursor-blink"></span>
             </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 fade-up" style="animation-delay: 0.3s;">
+            <div class="story-card p-5 rounded-2xl bg-[#121212] border border-neutral-800 text-center relative overflow-hidden">
+                <div class="glow-orb absolute -top-4 -right-4 w-20 h-20 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <p class="text-2xl mb-1 relative z-10">🎓</p>
+                <h4 class="font-semibold text-white text-sm relative z-10">IT Student</h4>
+                <p class="text-xs text-neutral-500 mt-1 relative z-10">Python, Java, C</p>
+            </div>
+            <div class="story-card p-5 rounded-2xl bg-[#121212] border border-neutral-800 text-center relative overflow-hidden">
+                <div class="glow-orb absolute -top-4 -right-4 w-20 h-20 bg-yellow-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <p class="text-2xl mb-1 relative z-10">💻</p>
+                <h4 class="font-semibold text-white text-sm relative z-10">Web Explorer</h4>
+                <p class="text-xs text-neutral-500 mt-1 relative z-10">HTML & CSS</p>
+            </div>
+            <div class="story-card p-5 rounded-2xl bg-[#121212] border border-neutral-800 text-center relative overflow-hidden">
+                <div class="glow-orb absolute -top-4 -right-4 w-20 h-20 bg-green-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <p class="text-2xl mb-1 relative z-10">🌿</p>
+                <h4 class="font-semibold text-white text-sm relative z-10">Exploring Nature</h4>
+                <p class="text-xs text-neutral-500 mt-1 relative z-10">Walks & Hiking</p>
+            </div>
         </div>
     </main>
 
@@ -59,4 +157,3 @@
 
 </body>
 </html>
-
