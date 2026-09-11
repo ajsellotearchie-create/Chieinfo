@@ -87,31 +87,39 @@
             border-color: rgba(234, 179, 8, 0.5);
         }
 
+        /* Collapsible Hobbies Container Animation */
+        #hobbiesContentContainer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        #hobbiesContentContainer.show {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
         @keyframes slowZoomIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Modal Overlay - Fixed sa screen para hindi mawala pag nag-scroll */
+        /* Strict Fixed Modal Overlay */
         .modal-overlay { 
             position: fixed; 
-            top: 0; 
-            left: 0; 
+            inset: 0; 
             width: 100vw; 
             height: 100vh; 
-            background: rgba(0, 0, 0, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.9); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: none; 
             justify-content: center; 
             align-items: center; 
             z-index: 99999; 
-            flex-direction: column; 
             opacity: 0; 
             transition: opacity 0.3s ease;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 2rem 1rem;
+            padding: 10px;
         }
         
         .modal-overlay.active { 
@@ -126,39 +134,37 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 90vw;
+            justify-content: center;
+            max-width: 340px;
             width: 100%;
-            margin: auto;
+            max-height: 90vh;
         }
 
         .img-modal-content { 
             max-width: 100%; 
-            max-height: 45vh; 
+            max-height: 38vh; 
             object-fit: contain;
-            border-radius: 12px; 
-            margin-bottom: 16px; 
+            border-radius: 10px; 
+            margin-bottom: 10px; 
             border: 1px solid var(--border-color); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
         }
 
-        /* Action Menu Styling */
+        /* Action Menu Styling for Mobile View */
         .action-menu {
             width: 100%;
-            max-width: 300px;
             background: rgba(18, 18, 18, 0.95);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
         }
 
         .menu-item {
-            padding: 10px 16px;
-            font-size: 0.85rem;
+            padding: 8px 14px;
+            font-size: 0.8rem;
             color: #ffffff;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
@@ -222,31 +228,40 @@
             </div>
         </div>
 
-        <div class="pt-8 space-y-6">
-            <div class="text-center">
+        <div class="pt-8 space-y-6 text-center">
+            <div>
                 <h3 class="text-2xl font-bold text-white">What I Love Doing</h3>
                 <p class="text-neutral-400 text-sm mt-1">My core personal activities and passions</p>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                    <p class="text-3xl mb-2">🍳</p>
-                    <h4 class="font-semibold text-white">Cooking</h4>
-                    <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
-                </div>
-                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                    <p class="text-3xl mb-2">✏️</p>
-                    <h4 class="font-semibold text-white">Drawing</h4>
-                    <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
-                </div>
-                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                    <p class="text-3xl mb-2">✍️</p>
-                    <h4 class="font-semibold text-white">Writing</h4>
-                    <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
-                </div>
-                <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                    <p class="text-3xl mb-2">🎮</p>
-                    <h4 class="font-semibold text-white">Playing</h4>
-                    <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
+            
+            <!-- Toggle Button -->
+            <button onclick="toggleHobbies()" id="toggleHobbiesBtn" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-yellow-500/20 active:scale-95 cursor-pointer">
+                ✨ View What I Love Doing
+            </button>
+
+            <!-- Collapsible Grid Container -->
+            <div id="hobbiesContentContainer">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 pt-4">
+                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
+                        <p class="text-3xl mb-2">🍳</p>
+                        <h4 class="font-semibold text-white">Cooking</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
+                    </div>
+                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
+                        <p class="text-3xl mb-2">✏️</p>
+                        <h4 class="font-semibold text-white">Drawing</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
+                    </div>
+                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
+                        <p class="text-3xl mb-2">✍️</p>
+                        <h4 class="font-semibold text-white">Writing</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
+                    </div>
+                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
+                        <p class="text-3xl mb-2">🎮</p>
+                        <h4 class="font-semibold text-white">Playing</h4>
+                        <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -266,12 +281,23 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="py-12 px-6 text-center text-sm text-neutral-400 border-t border-neutral-800 bg-black mt-12">
-        <p>© Archie Sellote. Built with C, HTML, CSS.</p>
-    </footer>
-
     <script>
+        function toggleHobbies() {
+            const container = document.getElementById('hobbiesContentContainer');
+            const btn = document.getElementById('toggleHobbiesBtn');
+            
+            container.classList.toggle('show');
+            if (container.classList.contains('show')) {
+                btn.innerText = 'Hide What I Love Doing';
+                btn.style.background = '#333';
+                btn.style.color = '#fff';
+            } else {
+                btn.innerText = '✨ View What I Love Doing';
+                btn.style.background = '#eab308';
+                btn.style.color = '#000';
+            }
+        }
+
         function openImgModal(imgElement, alt) {
             imgElement.classList.add('animate-pop');
             setTimeout(() => imgElement.classList.remove('animate-pop'), 200);
