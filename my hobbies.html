@@ -11,177 +11,159 @@
             --text-muted: #a3a3a3;
         }
 
+        * { scroll-behavior: smooth; }
+
+        body {
+            background: #000;
+            background-image:
+                radial-gradient(circle at 20% 10%, rgba(234, 179, 8, 0.06), transparent 35%),
+                radial-gradient(circle at 80% 60%, rgba(234, 179, 8, 0.04), transparent 40%);
+        }
+
         @keyframes pageIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .page-transition {
-            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .page-transition { animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Pop click animation for images */
-        @keyframes popClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .animate-pop { 
-            animation: popClick 0.2s ease-out; 
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
 
-        .gallery-item-wrapper { 
-            position: relative; 
-            height: 240px; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            cursor: pointer; 
-            background: rgba(255, 255, 255, 0.03); 
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #facc15 0%, #fff8dc 25%, #facc15 50%, #fff8dc 75%, #facc15 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        /* Nav underline */
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 0%;
+            height: 2px;
+            background: #facc15;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after { width: 100%; }
+
+        /* Gallery */
+        .gallery-item-wrapper {
+            position: relative;
+            height: 240px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color); 
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+            border: 1px solid var(--border-color);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
         }
         .gallery-item-wrapper:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.3);
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(234, 179, 8, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(234, 179, 8, 0.25);
         }
-        .gallery-item { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease; 
-            filter: grayscale(15%); 
+        .gallery-item-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.75) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
         }
-        .gallery-item-wrapper:hover .gallery-item { 
-            transform: scale(1.08); 
-            filter: grayscale(0%); 
+        .gallery-item-wrapper:hover::before { opacity: 1; }
+        .gallery-caption {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            right: 14px;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
         }
-        
-        .gallery-item-wrapper::after {
-            content: '❤️ 💬'; 
-            position: absolute; 
-            inset: 0; 
-            background: rgba(0,0,0,0.7);
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 10px; 
-            font-size: 1.1rem;
-            opacity: 0; 
-            transition: opacity 0.3s ease;
+        .gallery-item-wrapper:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .gallery-item-wrapper:hover::after { opacity: 1; }
+        .gallery-item {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%);
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+        }
+        .gallery-item-wrapper:hover .gallery-item {
+            transform: scale(1.12);
+            filter: grayscale(0%);
+        }
 
+        /* Hobby cards */
         .hobby-card {
+            position: relative;
+            overflow: hidden;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
         }
+        .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(234, 179, 8, 0.12) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .hobby-card:hover::before { opacity: 1; }
         .hobby-card:hover {
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.2);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.25);
             border-color: rgba(234, 179, 8, 0.5);
         }
-
-        /* Collapsible Hobbies Container Animation */
-        #hobbiesContentContainer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-            opacity: 0;
+        .hobby-emoji {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        #hobbiesContentContainer.show {
-            max-height: 1000px;
-            opacity: 1;
+        .hobby-card:hover .hobby-emoji {
+            transform: scale(1.25) rotate(-8deg);
+            animation: floatSlow 2s ease-in-out infinite;
         }
 
-        @keyframes slowZoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        .section-badge {
+            animation: floatSlow 4s ease-in-out infinite;
+            display: inline-block;
         }
 
-        /* Strict Fixed Modal Overlay */
-        .modal-overlay { 
-            position: fixed; 
-            inset: 0; 
-            width: 100vw; 
-            height: 100vh; 
-            background: rgba(0, 0, 0, 0.9); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: none; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 99999; 
-            opacity: 0; 
-            transition: opacity 0.3s ease;
-            padding: 10px;
-        }
-        
-        .modal-overlay.active { 
-            opacity: 1; 
-        }
-        
-        .modal-overlay.active .modal-container {
-            animation: slowZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .modal-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 340px;
-            width: 100%;
-            max-height: 90vh;
-        }
-
-        .img-modal-content { 
-            max-width: 100%; 
-            max-height: 38vh; 
-            object-fit: contain;
-            border-radius: 10px; 
-            margin-bottom: 10px; 
-            border: 1px solid var(--border-color); 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-        }
-
-        /* Action Menu Styling for Mobile View */
-        .action-menu {
-            width: 100%;
-            background: rgba(18, 18, 18, 0.95);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-item {
-            padding: 8px 14px;
-            font-size: 0.8rem;
-            color: #ffffff;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .menu-item:last-child {
-            border-bottom: none;
-            color: #ef4444;
-        }
-
-        .menu-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        footer a { transition: color 0.3s ease; }
     </style>
 </head>
 <body class="bg-black text-white font-sans selection:bg-yellow-500 selection:text-white min-h-screen flex flex-col justify-between page-transition">
@@ -189,139 +171,85 @@
     <!-- Header -->
     <header class="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-4 md:px-6 h-20 flex items-center justify-between max-w-6xl mx-auto w-full">
         <nav class="flex items-center space-x-4 md:space-x-6 text-xs md:text-sm font-medium">
-            <a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a>
-            <a href="about me.html" class="hover:text-yellow-400 transition-colors">About Me</a>
-            <a href="my hobbies.html" class="text-yellow-400 font-semibold transition-colors">Hobbies</a>
-            <a href="my future business.html" class="hover:text-yellow-400 transition-colors">Business</a>
+            <a href="index.html" class="nav-link hover:text-yellow-400 transition-colors">Home</a>
+            <a href="about me.html" class="nav-link hover:text-yellow-400 transition-colors">About Me</a>
+            <a href="my hobbies.html" class="nav-link active text-yellow-400 font-semibold transition-colors">Hobbies</a>
+            <a href="my future business.html" class="nav-link hover:text-yellow-400 transition-colors">Business</a>
         </nav>
-        <a href="home.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+        <a href="home.html" class="text-neutral-400 hover:text-white hover:rotate-90 text-xl font-bold p-2 transition-all duration-300 inline-block">✕</a>
     </header>
 
     <!-- Content -->
-    <main class="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16 space-y-12 w-full">
-        <div class="text-center space-y-3">
-            <span class="text-xs uppercase tracking-widest text-yellow-400 font-semibold">Personal Life & Interests</span>
-            <h1 class="text-3xl md:text-5xl font-extrabold text-white">Random Pictures of Nature</h1>
+    <main class="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-16 space-y-14 w-full">
+        <div class="text-center space-y-3 fade-up" style="animation-delay: 0.05s;">
+            <span class="section-badge text-xs uppercase tracking-widest text-yellow-400 font-semibold">✦ Personal Life & Interests ✦</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold shimmer-text">Random Pictures of Nature</h1>
             <p class="text-neutral-400 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
                 Here is a dedicated visual showcase of my personal interests, creative pursuits, and favorite moments outside of coding.
             </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 25px;">
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 1')">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.1s;">
                 <img src="a.jpg" alt="Nature photo 1" class="gallery-item">
+                <span class="gallery-caption">Morning light</span>
             </div>
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 2')">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.18s;">
                 <img src="b.jpg" alt="Nature photo 2" class="gallery-item">
+                <span class="gallery-caption">Quiet trail</span>
             </div>
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 3')">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.26s;">
                 <img src="c.jpg" alt="Nature photo 3" class="gallery-item">
+                <span class="gallery-caption">Open sky</span>
             </div>
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 4')">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.34s;">
                 <img src="d.jpg" alt="Nature photo 4" class="gallery-item">
+                <span class="gallery-caption">Still water</span>
             </div>
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 5')">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.42s;">
                 <img src="e.jpg" alt="Nature photo 5" class="gallery-item">
+                <span class="gallery-caption">Green depths</span>
             </div>
-            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 6')">
+            <div class="gallery-item-wrapper fade-up" style="animation-delay: 0.5s;">
                 <img src="f.jpg" alt="Nature photo 6" class="gallery-item">
+                <span class="gallery-caption">Golden hour</span>
             </div>
         </div>
 
-        <div class="pt-8 space-y-6 text-center">
-            <div>
+        <div class="pt-6 space-y-6">
+            <div class="text-center fade-up" style="animation-delay: 0.55s;">
                 <h3 class="text-2xl font-bold text-white">What I Love Doing</h3>
                 <p class="text-neutral-400 text-sm mt-1">My core personal activities and passions</p>
             </div>
-            
-            <!-- Toggle Button -->
-            <button onclick="toggleHobbies()" id="toggleHobbiesBtn" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-bold rounded-xl transition-all duration-300 shadow-lg shadow-yellow-500/20 active:scale-95 cursor-pointer">
-                ✨ View What I Love Doing
-            </button>
-
-            <!-- Collapsible Grid Container -->
-            <div id="hobbiesContentContainer">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 pt-4">
-                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                        <p class="text-3xl mb-2">🍳</p>
-                        <h4 class="font-semibold text-white">Cooking</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
-                    </div>
-                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                        <p class="text-3xl mb-2">✏️</p>
-                        <h4 class="font-semibold text-white">Drawing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
-                    </div>
-                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                        <p class="text-3xl mb-2">✍️</p>
-                        <h4 class="font-semibold text-white">Writing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
-                    </div>
-                    <div class="hobby-card p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer">
-                        <p class="text-3xl mb-2">🎮</p>
-                        <h4 class="font-semibold text-white">Playing</h4>
-                        <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
-                    </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="hobby-card fade-up p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer" style="animation-delay: 0.62s;">
+                    <p class="text-3xl mb-2 hobby-emoji">🍳</p>
+                    <h4 class="font-semibold text-white">Cooking</h4>
+                    <p class="text-xs text-neutral-400 mt-1">Trying new food recipes</p>
+                </div>
+                <div class="hobby-card fade-up p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer" style="animation-delay: 0.7s;">
+                    <p class="text-3xl mb-2 hobby-emoji">✏️</p>
+                    <h4 class="font-semibold text-white">Drawing</h4>
+                    <p class="text-xs text-neutral-400 mt-1">Sketching and creative arts</p>
+                </div>
+                <div class="hobby-card fade-up p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer" style="animation-delay: 0.78s;">
+                    <p class="text-3xl mb-2 hobby-emoji">✍️</p>
+                    <h4 class="font-semibold text-white">Writing</h4>
+                    <p class="text-xs text-neutral-400 mt-1">Poems, stories and thoughts</p>
+                </div>
+                <div class="hobby-card fade-up p-6 rounded-2xl bg-[#121212] border border-neutral-800 text-center shadow-md cursor-pointer" style="animation-delay: 0.86s;">
+                    <p class="text-3xl mb-2 hobby-emoji">🎮</p>
+                    <h4 class="font-semibold text-white">Playing</h4>
+                    <p class="text-xs text-neutral-400 mt-1">Games and recreation</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Custom Image Modal Container -->
-    <div id="imgModal" class="modal-overlay" onclick="closeImgModal()">
-        <div class="modal-container" onclick="event.stopPropagation()">
-            <img id="modalImg" class="img-modal-content">
-            <div class="action-menu">
-                <div class="menu-item">❤️ Like Photo</div>
-                <div class="menu-item">💬 Leave Comment</div>
-                <div class="menu-item">⟳ Repost</div>
-                <div class="menu-item">🔗 Copy Link</div>
-                <div class="menu-item">⚠️ Report</div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleHobbies() {
-            const container = document.getElementById('hobbiesContentContainer');
-            const btn = document.getElementById('toggleHobbiesBtn');
-            
-            container.classList.toggle('show');
-            if (container.classList.contains('show')) {
-                btn.innerText = 'Hide What I Love Doing';
-                btn.style.background = '#333';
-                btn.style.color = '#fff';
-            } else {
-                btn.innerText = '✨ View What I Love Doing';
-                btn.style.background = '#eab308';
-                btn.style.color = '#000';
-            }
-        }
-
-        function openImgModal(imgElement, alt) {
-            imgElement.classList.add('animate-pop');
-            setTimeout(() => imgElement.classList.remove('animate-pop'), 200);
-
-            const modal = document.getElementById('imgModal');
-            const modalImg = document.getElementById('modalImg');
-            
-            modalImg.src = imgElement.src;
-            modalImg.alt = alt;
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => modal.classList.add('active'), 10);
-        }
-
-        function closeImgModal() {
-            const modal = document.getElementById('imgModal');
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-    </script>
+    <!-- Footer -->
+    <footer class="py-12 px-6 text-center text-sm text-neutral-400 border-t border-neutral-800 bg-black mt-12">
+        <p>© Archie Sellote. Built with C, HTML, CSS.</p>
+    </footer>
 
 </body>
 </html>
