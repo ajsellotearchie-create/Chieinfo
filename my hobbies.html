@@ -6,6 +6,11 @@
     <title>Hobbies - Archie Sellote</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --border-color: rgba(132, 132, 132, 0.3);
+            --text-muted: #a3a3a3;
+        }
+
         @keyframes pageIn {
             from {
                 opacity: 0;
@@ -19,27 +24,60 @@
         .page-transition {
             animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .gallery-item-wrapper {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.03);
+
+        /* Pop click animation for images */
+        @keyframes popClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-pop { 
+            animation: popClick 0.2s ease-out; 
+        }
+
+        .gallery-item-wrapper { 
+            position: relative; 
+            height: 240px; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            cursor: pointer; 
+            background: rgba(255, 255, 255, 0.03); 
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(132, 132, 132, 0.3);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); 
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
         }
         .gallery-item-wrapper:hover {
             transform: translateY(-6px);
             box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.3);
         }
-        .gallery-item-wrapper img {
-            transition: transform 0.5s ease, filter 0.5s ease;
+        .gallery-item { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), filter 0.5s ease; 
+            filter: grayscale(15%); 
         }
-        .gallery-item-wrapper:hover img { 
+        .gallery-item-wrapper:hover .gallery-item { 
             transform: scale(1.08); 
             filter: grayscale(0%); 
         }
+        
+        .gallery-item-wrapper::after {
+            content: '❤️ 💬'; 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(0,0,0,0.7);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 10px; 
+            font-size: 1.1rem;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item-wrapper:hover::after { opacity: 1; }
+
         .hobby-card {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s ease;
         }
@@ -48,35 +86,86 @@
             box-shadow: 0 15px 30px -10px rgba(234, 179, 8, 0.2);
             border-color: rgba(234, 179, 8, 0.5);
         }
-        @keyframes igPop {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        .ig-modal-animate {
-            animation: igPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+        @keyframes slowZoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* Fixed Overlay for Modal */
-        #igModal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 99999;
-            display: none;
-            align-items: center;
-            justify-content: center;
+        /* Modal Overlay */
+        .modal-overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: rgba(0, 0, 0, 0.85); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 99999; 
+            flex-direction: column; 
+            opacity: 0; 
+            transition: opacity 0.3s ease;
             overflow-y: auto;
             padding: 1rem;
+        }
+        
+        .modal-overlay.active { 
+            opacity: 1; 
+        }
+        
+        .modal-overlay.active .img-modal-content, 
+        .modal-overlay.active .action-menu {
+            animation: slowZoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .img-modal-content { 
+            max-width: 85%; 
+            max-height: 50vh; 
+            object-fit: contain;
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+        }
+
+        /* Action Menu Styling */
+        .action-menu {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .menu-item {
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+            color: #ef4444;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
@@ -103,24 +192,24 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('a.jpg', 'Nature photo 1')">
-                <img src="a.jpg" alt="Nature photo 1" class="w-full h-full object-cover filter grayscale-[15%]">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 25px;">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 1')">
+                <img src="a.jpg" alt="Nature photo 1" class="gallery-item">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('b.jpg', 'Nature photo 2')">
-                <img src="b.jpg" alt="Nature photo 2" class="w-full h-full object-cover filter grayscale-[15%]">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 2')">
+                <img src="b.jpg" alt="Nature photo 2" class="gallery-item">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('c.jpg', 'Nature photo 3')">
-                <img src="c.jpg" alt="Nature photo 3" class="w-full h-full object-cover filter grayscale-[15%]">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 3')">
+                <img src="c.jpg" alt="Nature photo 3" class="gallery-item">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('d.jpg', 'Nature photo 4')">
-                <img src="d.jpg" alt="Nature photo 4" class="w-full h-full object-cover filter grayscale-[15%]">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 4')">
+                <img src="d.jpg" alt="Nature photo 4" class="gallery-item">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('e.jpg', 'Nature photo 5')">
-                <img src="e.jpg" alt="Nature photo 5" class="w-full h-full object-cover filter grayscale-[15%]">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 5')">
+                <img src="e.jpg" alt="Nature photo 5" class="gallery-item">
             </div>
-            <div class="gallery-item-wrapper h-64 md:h-72" onclick="openIgModal('f.jpg', 'Nature photo 6')">
-                <img src="f.jpg" alt="Nature photo 6" class="w-full h-full object-cover filter grayscale-[15%]">
+            <div class="gallery-item-wrapper" onclick="openImgModal(this.querySelector('img'), 'Nature photo 6')">
+                <img src="f.jpg" alt="Nature photo 6" class="gallery-item">
             </div>
         </div>
 
@@ -154,39 +243,15 @@
         </div>
     </main>
 
-    <!-- Popup Modal with Image and Action Menu Below -->
-    <div id="igModal" onclick="closeIgModal()">
-        <div class="relative w-full max-w-md flex flex-col items-center justify-center gap-4 my-auto ig-modal-animate" onclick="event.stopPropagation()">
-            
-            <!-- Expanded Image -->
-            <div class="relative w-full flex items-center justify-center">
-                <img id="igModalImg" src="" alt="" class="max-w-full max-h-[50vh] object-contain rounded-2xl shadow-2xl border border-neutral-800">
-            </div>
-
-            <!-- Instagram Action Menu Below Image -->
-            <div class="w-full bg-[#121212] border border-neutral-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-sm divide-y divide-neutral-800/60">
-                <button onclick="handleAction('Like')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
-                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-red-500 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    <span class="font-medium text-white">Like</span>
-                </button>
-                <button onclick="handleAction('Comment')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
-                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    <span class="font-medium text-white">Comment</span>
-                </button>
-                <button onclick="handleAction('Repost')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
-                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-green-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    <span class="font-medium text-white">Repost</span>
-                </button>
-                <button onclick="handleAction('Share')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
-                    <svg class="w-5 h-5 text-neutral-300 group-hover:text-purple-400 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-                    <span class="font-medium text-white">Share</span>
-                </button>
-                <button onclick="handleAction('Report')" class="flex items-center space-x-4 px-5 py-3.5 hover:bg-neutral-800/50 transition-colors text-left cursor-pointer group">
-                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <span class="font-medium text-red-500">Report</span>
-                </button>
-            </div>
-
+    <!-- Custom Image Modal Container -->
+    <div id="imgModal" class="modal-overlay" onclick="closeImgModal()">
+        <img id="modalImg" class="img-modal-content" onclick="event.stopPropagation()">
+        <div class="action-menu" onclick="event.stopPropagation()">
+            <div class="menu-item">❤️ Like Photo</div>
+            <div class="menu-item">💬 Leave Comment</div>
+            <div class="menu-item">⟳ Repost</div>
+            <div class="menu-item">🔗 Copy Link</div>
+            <div class="menu-item">⚠️ Report</div>
         </div>
     </div>
 
@@ -196,23 +261,29 @@
     </footer>
 
     <script>
-        function openIgModal(src, alt) {
-            const modal = document.getElementById('igModal');
-            const modalImg = document.getElementById('igModalImg');
-            modalImg.src = src;
+        function openImgModal(imgElement, alt) {
+            // Trigger pop click animation on the clicked image
+            imgElement.classList.add('animate-pop');
+            setTimeout(() => imgElement.classList.remove('animate-pop'), 200);
+
+            const modal = document.getElementById('imgModal');
+            const modalImg = document.getElementById('modalImg');
+            
+            modalImg.src = imgElement.src;
             modalImg.alt = alt;
+            
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            setTimeout(() => modal.classList.add('active'), 10);
         }
 
-        function closeIgModal() {
-            const modal = document.getElementById('igModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function handleAction(action) {
-            alert(action + ' clicked!');
+        function closeImgModal() {
+            const modal = document.getElementById('imgModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 300);
         }
     </script>
 
