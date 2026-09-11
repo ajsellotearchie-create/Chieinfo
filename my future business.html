@@ -7,23 +7,73 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes pageIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .page-transition {
-            animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .page-transition { animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeUpRotate {
+            from { opacity: 0; transform: translateY(30px) rotate(0deg) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) rotate(var(--rot)) scale(1); }
+        }
+        .polaroid-in {
+            opacity: 0;
+            animation: fadeUpRotate 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #facc15 0%, #fff8dc 25%, #f59e0b 50%, #fff8dc 75%, #facc15 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        .section-badge {
+            animation: floatSlow 4s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 0%;
+            height: 2px;
+            background: #facc15;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after { width: 100%; }
+
         .wood-bg {
             background-color: #1a0f0a;
             background-image: radial-gradient(circle, rgba(255,255,255,0.03) 10%, transparent 10%),
+                              radial-gradient(circle at 30% 20%, rgba(234,179,8,0.06), transparent 40%),
                               linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
-            background-size: 20px 20px, 100% 100%;
+            background-size: 20px 20px, 100% 100%, 100% 100%;
         }
         .polaroid-frame {
             background: #fdfbf7;
@@ -45,11 +95,32 @@
             border-radius: 50%;
             box-shadow: 0 3px 6px rgba(0,0,0,0.6);
             z-index: 10;
+            transition: transform 0.4s ease;
+        }
+        .polaroid-frame:hover::before {
+            transform: translateX(-50%) rotate(20deg) scale(1.15);
         }
         .polaroid-frame:hover {
             transform: scale(1.08) rotate(0deg) translateY(-8px) !important;
             z-index: 30;
             box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(234, 179, 8, 0.4);
+        }
+        .polaroid-frame img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+            filter: saturate(0.9);
+        }
+        .polaroid-frame:hover img {
+            transform: scale(1.08);
+            filter: saturate(1.15);
+        }
+
+        .sweet-card {
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .sweet-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(234, 179, 8, 0.4);
+            box-shadow: 0 20px 40px -20px rgba(234, 179, 8, 0.3);
         }
     </style>
 </head>
@@ -58,50 +129,50 @@
     <!-- Header -->
     <header class="sticky top-0 z-20 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-6 h-20 flex items-center justify-between max-w-6xl mx-auto w-full">
         <nav class="flex items-center space-x-6 text-sm font-medium">
-            <a href="index.html" class="hover:text-yellow-400 transition-colors">Home</a>
-            <a href="about me.html" class="hover:text-yellow-400 transition-colors">About Me</a>
-            <a href="my hobbies.html" class="hover:text-yellow-400 transition-colors">Hobbies</a>
-            <a href="my future business.html" class="text-yellow-400 font-semibold transition-colors">Business</a>
+            <a href="index.html" class="nav-link hover:text-yellow-400 transition-colors">Home</a>
+            <a href="about me.html" class="nav-link hover:text-yellow-400 transition-colors">About Me</a>
+            <a href="my hobbies.html" class="nav-link hover:text-yellow-400 transition-colors">Hobbies</a>
+            <a href="my future business.html" class="nav-link active text-yellow-400 font-semibold transition-colors">Business</a>
         </nav>
-        <a href="home.html" class="text-neutral-400 hover:text-white text-xl font-bold p-2">✕</a>
+        <a href="index.html" class="text-neutral-400 hover:text-white hover:rotate-90 text-xl font-bold p-2 transition-all duration-300 inline-block">✕</a>
     </header>
 
     <!-- Content -->
     <main class="max-w-5xl mx-auto px-6 py-16 space-y-12 w-full">
-        <div class="text-center space-y-3">
-            <span class="text-xs uppercase tracking-widest text-yellow-400 font-semibold">Future Venture Pinboard</span>
-            <h1 class="text-4xl md:text-5xl font-extrabold text-white">My Dream Cake Shop</h1>
+        <div class="text-center space-y-3 fade-up" style="animation-delay: 0.05s;">
+            <span class="section-badge text-xs uppercase tracking-widest text-yellow-400 font-semibold">✦ Future Venture Pinboard ✦</span>
+            <h1 class="text-4xl md:text-5xl font-extrabold shimmer-text">My Dream Cake Shop</h1>
             <p class="text-neutral-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
                 Visualizing my future artisanal bakery and custom cake studio. Hover over the polaroids to check out the details!
             </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 pt-6 pb-12 max-w-4xl mx-auto items-center justify-items-center">
-            <div class="polaroid-frame w-64 transform -rotate-3 text-neutral-800 font-handwriting">
+            <div class="polaroid-frame polaroid-in w-64 text-neutral-800 font-handwriting" style="--rot: -3deg; animation-delay: 0.15s;">
                 <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
                     <img src="6.jpg" alt="Artisanal Cakes" class="w-full h-full object-cover">
                 </div>
                 <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Custom Wedding Cakes</p>
             </div>
-            <div class="polaroid-frame w-64 transform rotate-2 text-neutral-800 font-handwriting">
+            <div class="polaroid-frame polaroid-in w-64 text-neutral-800 font-handwriting" style="--rot: 2deg; animation-delay: 0.25s;">
                 <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
                     <img src="7.jpg" alt="Pastry Display" class="w-full h-full object-cover">
                 </div>
                 <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Cozy Bakery Interior</p>
             </div>
-            <div class="polaroid-frame w-64 transform -rotate-2 text-neutral-800 font-handwriting">
+            <div class="polaroid-frame polaroid-in w-64 text-neutral-800 font-handwriting" style="--rot: -2deg; animation-delay: 0.35s;">
                 <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
                     <img src="8.jpg" alt="Fresh Pastries" class="w-full h-full object-cover">
                 </div>
                 <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Freshly Baked Pastries</p>
             </div>
-            <div class="polaroid-frame w-64 transform rotate-3 text-neutral-800 font-handwriting">
+            <div class="polaroid-frame polaroid-in w-64 text-neutral-800 font-handwriting" style="--rot: 3deg; animation-delay: 0.45s;">
                 <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
                     <img src="9.jpg" alt="Coffee and Desserts" class="w-full h-full object-cover">
                 </div>
                 <p class="text-center text-xs font-bold tracking-wide uppercase text-neutral-700">Coffee & Dessert Bar</p>
             </div>
-            <div class="polaroid-frame w-64 transform -rotate-1 text-neutral-800 font-handwriting">
+            <div class="polaroid-frame polaroid-in w-64 text-neutral-800 font-handwriting" style="--rot: -1deg; animation-delay: 0.55s;">
                 <div class="h-52 w-full overflow-hidden bg-neutral-200 mb-3">
                     <img src="10.jpg" alt="Baking Studio" class="w-full h-full object-cover">
                 </div>
@@ -109,7 +180,7 @@
             </div>
         </div>
 
-        <div class="p-6 rounded-2xl bg-black/60 backdrop-blur-md border border-neutral-800 text-center max-w-xl mx-auto shadow-xl space-y-2">
+        <div class="sweet-card fade-up p-6 rounded-2xl bg-black/60 backdrop-blur-md border border-neutral-800 text-center max-w-xl mx-auto shadow-xl space-y-2" style="animation-delay: 0.65s;">
             <h3 class="text-yellow-400 font-semibold text-sm">Sweet Beginnings</h3>
             <p class="text-neutral-300 text-xs md:text-sm">
                 A warm, inviting space dedicated to creating delicious memories, fresh pastries, and custom celebration cakes for every special occasion.
